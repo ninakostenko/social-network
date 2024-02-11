@@ -1,0 +1,14 @@
+.descriptionBlock {
+    padding: 10px;
+}
+.mainImg {
+    background: url("https://www.gannett-cdn.com/presto/2018/08/14/PTAL/6e4fff76-595d-4069-9112-cfe15dbfaa43-IMG_Stadium.jpeg?width=660&height=319&fit=crop&format=pjpg&auto=webp") no-repeat;
+    background-size: 100%;
+}
+.photo {
+    width: 150px;
+    height: 150px;
+}
+.btn {
+    border-radius: 5px ;
+}

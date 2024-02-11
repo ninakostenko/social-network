@@ -1,0 +1,11 @@
+.currentPage {
+
+}
+.selectedPage {
+    font-weight: bold;
+    font-size: 20px;
+    padding: 5px;
+}
+.pagination {
+
+}

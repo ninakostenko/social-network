@@ -1,38 +1,47 @@
 .App {
-  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-areas:
+            "h h"
+            "n c";
+  grid-template-rows: 60px 1fr;
+  grid-template-columns: 2fr 10fr;
+  grid-gap: 10px;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.content {
+  grid-area: c;
+  background-color: #e0c5e6;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.active {
+  color: #d11616;
 }
+.btn {
+  margin: 10px;
+  color: #fafafa;
+  padding: 10px;
+  background-color: #4f085f;
+  border-radius: 10px 0 10px 0;
+  cursor: pointer;
+  border: none;
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
-
-.App-link {
-  color: #61dafb;
+.btn:hover{
+  background-color: #7e418b;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.input {
+  outline:none;
+  border: none;
+  border-bottom: 1px solid rebeccapurple;
+  background-color: transparent;
+}
+body {
+  font-family: 'Lora', serif;
+  font-family: 'Manrope', sans-serif;
+  font-family: 'Merriweather', serif;
+  font-family: 'Noto Serif Georgian', serif;
+  font-family: 'Open Sans', sans-serif;
+  font-family: 'Playfair Display', serif;
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto Slab', serif;
 }

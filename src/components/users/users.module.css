@@ -1,0 +1,76 @@
+.photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+}
+
+.user {
+    padding: 10px;
+}
+
+.name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #4f085f;
+}
+
+.wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+}
+
+.button {
+    background-color: #e86ef9;
+    border: 1px solid #4f085f;
+    border-radius: 10px 0 10px 0;
+    cursor: pointer;
+    padding: 10px;
+    font-weight: bold;
+    color: #4a1656;
+    width: 100px;
+    margin: 10px auto;
+}
+
+.status {
+    display: flex;
+    border: 1px solid #4a1656;
+    padding: 20px;
+    color: #4a1656;
+    background-color: #e86ef9;
+    border-radius: 30px 0 30px 0;
+    font-size: 20px;
+    font-weight: bold;
+    min-width: 400px;
+
+}
+
+.userStatus {
+    padding-left: 15px;
+}
+
+.userCity {
+    padding-left: 70px;
+    color: white;
+}
+
+.userCountry {
+    padding-left: 15px;
+    color: white;
+}
+
+.page {
+    color: #1a0404;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 5px;
+    border: 1px solid #8b1b9b;
+}
+
+.selectedPage {
+    font-weight: bold;
+    font-size: 20px;
+    padding: 5px;
+}
