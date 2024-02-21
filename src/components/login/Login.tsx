@@ -55,9 +55,15 @@ const LoginForm = ({handleSubmit, error, captchaUrl }: any) => {
 const LoginReduxForm = reduxForm({form: 'login'})(LoginForm)
     // a unique name for the form
 
+// type  ComponentProps = {
+//     onSubmit: (formData: any) => void;
+//     captchaUrl: string | null,
+//     login: null | string | number,
+//     isAuth: boolean
+// }
 
 
-const Login = (props: any) => {
+const Login  = (props: any) => {
     const onSubmit = (formData: any) => {
         props.login(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }

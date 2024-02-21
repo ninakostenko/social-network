@@ -1,7 +1,6 @@
-
 let initialState = {}
-const sidebarReducer = (state: any = initialState, action: any) => {
-
+type InitialStateSideBarType = typeof initialState
+const sidebarReducer = (state = initialState, action: any): InitialStateSideBarType => {
 
 
     return state

@@ -5,25 +5,20 @@ const SET_USER_DATA = 'samurai-network/auth/SET_USER_DATA'
 const GET_CAPTCHA_URL_SUCCESS = 'samurai-network/auth/GET_CAPTCHA_URL_SUCCESS'
 
 
-type UsersType = {
-    userId: null
-    email: null
-    login: null
-    isAuth: boolean
-    captchaUrl: null
-}
 
 
-let initialState: UsersType = {
-    userId: null,
-    email: null,
-    login: null,
+let initialState = {
+    userId: null as number | null,
+    email: null as string | null,
+    login: null as string | null,
     isAuth: false,
-    captchaUrl: null
+    captchaUrl: null as string | null
 }
 
+export type UsersType = typeof initialState
 
-const authReducer = (state: any = initialState, action: any): UsersType => {
+
+const authReducer = (state = initialState, action: SetUserDataActionType | GetCaptchaUrlSuccessActionType): UsersType => {
     switch (action.type) {
         case SET_USER_DATA:
         case GET_CAPTCHA_URL_SUCCESS:
@@ -36,10 +31,32 @@ const authReducer = (state: any = initialState, action: any): UsersType => {
             return state
     }
 }
-export const setUserDataAC = (userId: any, email: any, login: any, isAuth: any) =>
+type SetUserDataActionPayloadType = {
+    userId: number | null,
+    email: string | null,
+    login: string | null,
+    isAuth: boolean
+}
+
+type SetUserDataActionType = {
+    type: typeof SET_USER_DATA,
+    payload: SetUserDataActionPayloadType
+}
+
+export const setUserDataAC = (userId: number | null, email: string | null, login: string | null, isAuth: boolean): SetUserDataActionType =>
     ({type: SET_USER_DATA, payload: {userId, email, login, isAuth}})
 
-export const getCaptchaUrSuccessAC = (captchaUrl: null) =>
+
+type GetCaptchaUrlSuccessActionPayloadType = {
+    captchaUrl: string | null
+}
+
+type GetCaptchaUrlSuccessActionType = {
+    type: typeof GET_CAPTCHA_URL_SUCCESS
+    payload: GetCaptchaUrlSuccessActionPayloadType
+}
+
+export const getCaptchaUrSuccessAC = (captchaUrl: string | null): GetCaptchaUrlSuccessActionType =>
     ({type: GET_CAPTCHA_URL_SUCCESS, payload: {captchaUrl}})
 
 //redux-thunk
@@ -52,7 +69,7 @@ export const getAuthUserData = () => async (dispatch: any) => {
 
 }
 
-export const login = (email: string | number, password: string | number, rememberMe: boolean = false, captcha: null) => async (dispatch: any) => {
+export const login = (email: string, password: string, rememberMe: boolean, captcha: any) => async (dispatch: any) => {
     const response = await authAPI.login(email, password, rememberMe, captcha)
     if (response.data.resultCode === 0) {
         dispatch(getAuthUserData())

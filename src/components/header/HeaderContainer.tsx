@@ -1,12 +1,16 @@
 import React from 'react';
-import Header from "./Header";
+import Header, {HeaderPropsType} from "./Header";
 import {connect} from "react-redux";
 import {logout} from "../../redux/auth-reducer";
 
-class HeaderContainer extends React.Component<any> {
+class HeaderContainer extends React.Component<HeaderPropsType> {
     render() {
         return (
-            <Header {...this.props}/>
+            // <Header {...this.props}/>
+            <Header isAuth={this.props.isAuth}
+                    login={this.props.login}
+                    logout={this.props.logout}
+            />
 
         );
     }

@@ -47,7 +47,7 @@ class App extends Component<any> {
                     <Routes>
                         <Route path='/profile/:userId?' element={<ProfileContainer/>}/>
                         <Route path='/profile' element={<ProfileContainer/>}/>
-                        <Route path="/users" element={<UsersContainer/>}/>
+                        <Route path="/users" element={<UsersContainer pageTitle={'Samuray'}/>}/>
                         <Route path='/dialogs/*' element={
                             <Suspense fallback={<div>Loading..</div>}>
                                 <DialogsContainer/>

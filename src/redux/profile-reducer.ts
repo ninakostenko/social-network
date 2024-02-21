@@ -14,24 +14,44 @@ type PostType = {
     like: number
 }
 
-export type InitialStateType = {
-    postsData: Array<PostType>
-    profile: null
-    status: ''
+type ContactsType = {
+    github: string
+    vk: string
+    facebook: string
+    instagram: string
+    twitter: string
+    website: string
+    youtube: string
+    mainLink: string
+}
 
+export type PhotosType = {
+    small: string | null
+    large: string | null
+}
+
+type ProfileType = {
+    userId: number
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    contacts: ContactsType
+    photos: PhotosType
 }
 
 let initialState = {
     postsData: [
         {id: 1, message: "..Hi", like: 5},
         {id: 2, message: "..Hello", like: 15}
-    ],
-    profile: null,
-    status: ''
+    ] as Array<PostType>,
+    profile: null as ProfileType | null,
+    status: '',
+    newPostText: ''
 }
 
+export type InitialStateProfileType = typeof initialState
 
-const profileReducer = (state: any = initialState, action: any) => {
+const profileReducer = (state = initialState, action: any): InitialStateProfileType => {
     switch (action.type) {
         case ADD_POST:
             let newPost = {
@@ -57,23 +77,46 @@ const profileReducer = (state: any = initialState, action: any) => {
         case DELETE_POST:
             return {
                 ...state,
-                postsData: state.posts.filter((p: any) => p.id != action.postId)
+                postsData: state.postsData.filter((p: any) => p.id != action.postId)
             }
         case SAVE_PHOTO_SUCCESS:
             return {
                 ...state,
-                profile: {...state.profile, photos: action.photos}
+                profile: {...state.profile, photos: action.photos} as ProfileType
             }
-
         default:
             return state
     }
 }
-export const addPostActionCreator = (newPostText: string) => ({type: ADD_POST, newPostText})
-export const setUserProfile = (profile: null) => ({type: SET_USER_PROFILE, profile})
-export const setStatusAC = (status: null) => ({type: SET_STATUS, status})
-export const deletePostAC = (postId: number) => ({type: DELETE_POST, postId})
-export const savePhotoSuccess = (photos: any) => ({type: SAVE_PHOTO_SUCCESS, photos})
+type AddPostActionCreatorActionType = {
+    type: typeof ADD_POST
+    newPostText: string
+}
+export const addPostActionCreator = (newPostText: string): AddPostActionCreatorActionType => ({type: ADD_POST, newPostText})
+
+type SetUserProfileActionType = {
+    type: typeof SET_USER_PROFILE
+    profile: ProfileType
+}
+export const setUserProfile = (profile: ProfileType): SetUserProfileActionType => ({type: SET_USER_PROFILE, profile})
+
+type SetStatusACActionType ={
+    type: typeof SET_STATUS
+    status: string
+}
+export const setStatusAC = (status: string): SetStatusACActionType => ({type: SET_STATUS, status})
+
+type DeletePostACActionType = {
+    type: typeof DELETE_POST
+    postId: number
+}
+export const deletePostAC = (postId: number): DeletePostACActionType=> ({type: DELETE_POST, postId})
+
+type SavePhotoSuccessActionType = {
+    type: typeof SAVE_PHOTO_SUCCESS
+    photos: PhotosType
+}
+export const savePhotoSuccess = (photos: PhotosType): SavePhotoSuccessActionType => ({type: SAVE_PHOTO_SUCCESS, photos})
 
 //thunk
 export const getUserProfile = (userId: number) => async (dispatch: any) => {
@@ -92,7 +135,7 @@ export const updateStatus = (status: any) => async (dispatch: any) => {
         if (response.data.resultCode === 0) {
             dispatch(setStatusAC(status))
         }
-    }catch (error) {
+    } catch (error) {
         alert('error')
     }
 
@@ -103,7 +146,7 @@ export const savePhoto = (file: any) => async (dispatch: any) => {
         dispatch(savePhotoSuccess(response.data.data.photos))
     }
 }
-export const saveProfile = (profile: any) => async (dispatch: any, getState: any) => {
+export const saveProfile = (profile: ProfileType) => async (dispatch: any, getState: any) => {
     const userId = getState().auth.userId
     const response = await profileAPI.saveProfile(profile)
     if (response.data.resultCode === 0) {

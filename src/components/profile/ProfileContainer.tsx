@@ -25,6 +25,9 @@ export function withRouter(Component: any) {
     return ComponentWithRouterProp;
 }
 
+type ProfileContainerPropsType = {
+
+}
 
 class ProfileContainer extends React.Component<any> {
     refreshProfile() {
