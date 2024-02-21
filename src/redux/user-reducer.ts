@@ -1,5 +1,8 @@
 import {userAPI} from "../api/api";
 import {PhotosType} from "./profile-reducer";
+import {Dispatch} from "redux";
+import {AppStateType} from "./redux-store";
+import {ThunkAction} from "redux-thunk";
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -153,8 +156,13 @@ export const toggleFollowingInProgress = (isFetching: boolean, userId: number): 
     userId
 })
 //thank
-export const requestUsers = (page: number, pageSize: number) => {
-    return async (dispatch: any) => {
+
+type GetStateType = () => AppStateType
+type DispatchType = Dispatch<AllActionsType>
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, AllActionsType>
+
+export const requestUsers = (page: number, pageSize: number): ThunkType => {
+    return async (dispatch: DispatchType, getState: GetStateType) => {
         dispatch(toggleIsFetching(true))
         dispatch(setCurrentPage(page))
 
@@ -166,8 +174,8 @@ export const requestUsers = (page: number, pageSize: number) => {
     }
 }
 //thank
-export const follow = (userId: number) => {
-    return async (dispatch: any) => {
+export const follow = (userId: number): ThunkType => {
+    return async (dispatch) => {
         dispatch(toggleFollowingInProgress(true, userId))
 
         const response = await userAPI.follow(userId)
@@ -179,8 +187,8 @@ export const follow = (userId: number) => {
     }
 }
 //thank
-export const unfollow = (userId: number) => {
-    return async (dispatch: any) => {
+export const unfollow = (userId: number): ThunkType => {
+    return async (dispatch ) => {
         dispatch(toggleFollowingInProgress(true, userId))
 
         const response = await userAPI.unfollow(userId)
