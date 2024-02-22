@@ -1,10 +1,8 @@
-import {authAPI, securityAPI} from "../api/api";
+import {authAPI, ResultCodeEnum, ResultCodeForCaptchaEnum, securityAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 
 const SET_USER_DATA = 'samurai-network/auth/SET_USER_DATA'
 const GET_CAPTCHA_URL_SUCCESS = 'samurai-network/auth/GET_CAPTCHA_URL_SUCCESS'
-
-
 
 
 let initialState = {
@@ -12,7 +10,7 @@ let initialState = {
     email: null as string | null,
     login: null as string | null,
     isAuth: false,
-    captchaUrl: null as string | null
+    captchaUrl: null as string | null,
 }
 
 export type UsersType = typeof initialState
@@ -61,23 +59,23 @@ export const getCaptchaUrSuccessAC = (captchaUrl: string | null): GetCaptchaUrlS
 
 //redux-thunk
 export const getAuthUserData = () => async (dispatch: any) => {
-    const response = await authAPI.me()
-    if (response.data.resultCode === 0) {
-        let {id, email, login,} = response.data.data
+    const meData = await authAPI.me()
+    if (meData.resultCode === ResultCodeEnum.Success) {
+        let {id, email, login,} = meData.data
         dispatch(setUserDataAC(id, email, login, true))
     }
 
 }
 
 export const login = (email: string, password: string, rememberMe: boolean, captcha: any) => async (dispatch: any) => {
-    const response = await authAPI.login(email, password, rememberMe, captcha)
-    if (response.data.resultCode === 0) {
+    const loginData = await authAPI.login(email, password, rememberMe, captcha)
+    if (loginData.resultCode === ResultCodeEnum.Success) {
         dispatch(getAuthUserData())
     } else {
-        if (response.data.resultCode === 10) {
+        if (loginData.resultCode === ResultCodeForCaptchaEnum.CaptchaIsRequired) {
             dispatch(getCaptchaUrl())
         }
-        let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error'
+        let message = loginData.messages.length > 0 ? loginData.messages[0] : 'Some error'
         dispatch(stopSubmit('login', {_error: message}))
     }
 }
